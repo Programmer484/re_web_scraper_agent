@@ -6,17 +6,86 @@ Provides REST API endpoints for React frontend integration
 
 import time
 import logging
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request, Depends, Header
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from pydantic import BaseModel, validator
 from typing import List, Optional
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
+import os
 
 from run_agent import search_properties
 from src.config import logger
 
+# Security configuration
+API_KEY = os.getenv("API_KEY", "")  # Set this in production
+ALLOWED_IPS = os.getenv("ALLOWED_IPS", "").split(",") if os.getenv("ALLOWED_IPS") else []
+MAX_REQUEST_SIZE = 1024 * 1024  # 1MB limit
+
 app = FastAPI(title="PropertySearch API", version="1.0.0")
+security = HTTPBearer(auto_error=False)
+
+# Security middleware
+@app.middleware("http")
+async def security_middleware(request: Request, call_next):
+    """Enhanced security middleware"""
+    start_time = time.time()
+    client_ip = request.client.host if request.client else "unknown"
+    
+    # Log webhook input (only for search endpoint)
+    if request.url.path == "/search":
+        logger.debug(f"🌐 WEBHOOK INPUT: {request.method} {request.url}")
+        if request.method == "POST":
+            try:
+                body = await request.body()
+                if body:
+                    logger.debug(f"📦 Request data: {body.decode('utf-8')}")
+            except Exception as e:
+                logger.debug(f"⚠️ Could not read request body: {e}")
+    
+    # IP whitelist check (if configured)
+    if ALLOWED_IPS and client_ip not in ALLOWED_IPS:
+        logger.warning(f"🚫 Blocked request from unauthorized IP: {client_ip}")
+        raise HTTPException(status_code=403, detail="IP not allowed")
+    
+    # Request size limit
+    content_length = request.headers.get("content-length")
+    if content_length and int(content_length) > MAX_REQUEST_SIZE:
+        logger.warning(f"🚫 Request too large: {content_length} bytes from {client_ip}")
+        raise HTTPException(status_code=413, detail="Request too large")
+    
+    # Process request
+    response = await call_next(request)
+    
+    # Add security headers
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["X-XSS-Protection"] = "1; mode=block"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    
+    # Log completion only for search endpoint
+    if request.url.path == "/search":
+        process_time = time.time() - start_time
+        logger.debug(f"✅ WEBHOOK COMPLETED: {process_time:.4f}s")
+        logger.debug(f"📤 Response status: {response.status_code}")
+    
+    return response
+
+# API Key authentication (optional)
+async def verify_api_key(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    """Verify API key if configured"""
+    if not API_KEY:  # Skip if no API key is set
+        return True
+    
+    if not credentials or credentials.credentials != API_KEY:
+        logger.warning(f"🔑 Invalid API key attempt")
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid API key",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    return True
 
 # Enable CORS for broader API access
 app.add_middleware(
@@ -63,7 +132,7 @@ async def log_requests(request: Request, call_next):
 
 
 class SearchFilters(BaseModel):
-    """API model for search filters"""
+    """API model for search filters with validation"""
     listing_type: str = "both"
     latitude: Optional[float] = None
     longitude: Optional[float] = None
@@ -77,6 +146,30 @@ class SearchFilters(BaseModel):
     min_baths: Optional[float] = None
     max_baths: Optional[float] = None
     home_types: Optional[List[str]] = None
+
+    @validator('listing_type')
+    def validate_listing_type(cls, v):
+        if v not in ['sale', 'rental', 'both']:
+            raise ValueError('listing_type must be "sale", "rental", or "both"')
+        return v
+
+    @validator('radius_miles')
+    def validate_radius(cls, v):
+        if v <= 0 or v > 100:
+            raise ValueError('radius_miles must be between 0 and 100')
+        return v
+
+    @validator('latitude')
+    def validate_latitude(cls, v):
+        if v is not None and (v < -90 or v > 90):
+            raise ValueError('latitude must be between -90 and 90')
+        return v
+
+    @validator('longitude')
+    def validate_longitude(cls, v):
+        if v is not None and (v < -180 or v > 180):
+            raise ValueError('longitude must be between -180 and 180')
+        return v
 
 
 class SearchResponse(BaseModel):
@@ -102,7 +195,10 @@ async def health():
 
 
 @app.post("/search", response_model=SearchResponse)
-async def search_properties_endpoint(filters: SearchFilters):
+async def search_properties_endpoint(
+    filters: SearchFilters, 
+    authenticated: bool = Depends(verify_api_key)
+):
     """
     Search properties with given filters
     
@@ -111,21 +207,9 @@ async def search_properties_endpoint(filters: SearchFilters):
     request_start = time.time()
     
     logger.debug("🔍 PROPERTY SEARCH REQUEST INITIATED")
-    logger.debug(f"📋 Search filters received: {filters.model_dump()}")
     
     try:
-        # Log search parameters for debugging
-        logger.debug(f"🎯 Search parameters:")
-        logger.debug(f"   - Listing type: {filters.listing_type}")
-        logger.debug(f"   - Location: ({filters.latitude}, {filters.longitude})")
-        logger.debug(f"   - Radius: {filters.radius_miles} miles")
-        logger.debug(f"   - Price range (sale): ${filters.min_sale_price} - ${filters.max_sale_price}")
-        logger.debug(f"   - Price range (rent): ${filters.min_rent_price} - ${filters.max_rent_price}")
-        logger.debug(f"   - Bedrooms: {filters.min_beds} - {filters.max_beds}")
-        logger.debug(f"   - Bathrooms: {filters.min_baths} - {filters.max_baths}")
-        logger.debug(f"   - Home types: {filters.home_types}")
-        
-        logger.debug("⚙️ Executing property search in thread pool...")
+        logger.debug("⚙️ Executing property search...")
         
         # Run the search in a thread pool to avoid blocking
         loop = asyncio.get_event_loop()
@@ -150,10 +234,8 @@ async def search_properties_endpoint(filters: SearchFilters):
         logger.debug(f"🎉 Property search completed! Found {len(listings)} listings")
         
         # Convert Pydantic models to dicts for JSON response
-        logger.debug("🔄 Converting listings to JSON format...")
         listings_data = []
-        for i, listing in enumerate(listings):
-            logger.debug(f"   Processing listing {i+1}/{len(listings)}")
+        for listing in listings:
             listing_dict = listing.model_dump()
             # Convert datetime to ISO string
             if listing_dict.get("timestamp"):
@@ -162,6 +244,11 @@ async def search_properties_endpoint(filters: SearchFilters):
             if listing_dict.get("source_url"):
                 listing_dict["source_url"] = str(listing_dict["source_url"])
             listings_data.append(listing_dict)
+        
+        # Show first result for debugging
+        if listings_data:
+            first_item = listings_data[0]
+            logger.debug(f"📋 First result: {first_item.get('address')} - ${first_item.get('sale_price') or first_item.get('rental_price')}")
         
         response_time = time.time() - request_start
         logger.debug(f"⏱️ Total request processing time: {response_time:.4f}s")
@@ -187,44 +274,6 @@ async def search_properties_endpoint(filters: SearchFilters):
             detail=f"Search failed: {str(e)}"
         )
 
-
-@app.get("/search/examples")
-async def get_search_examples():
-    """Get example filter configurations"""
-    logger.debug("📚 Examples endpoint called - returning filter templates")
-    
-    examples = {
-        "austin_rentals": {
-            "listing_type": "rental",
-            "latitude": 30.2672,
-            "longitude": -97.7431,
-            "radius_miles": 15.0,
-            "min_rent_price": 1000,
-            "max_rent_price": 4000,
-            "min_beds": 1
-        },
-        "downtown_condos": {
-            "listing_type": "sale",
-            "latitude": 30.2672,
-            "longitude": -97.7431,
-            "radius_miles": 5.0,
-            "min_sale_price": 300000,
-            "max_sale_price": 800000,
-            "home_types": ["CONDO"]
-        },
-        "family_homes": {
-            "listing_type": "both",
-            "latitude": 30.2672,
-            "longitude": -97.7431,
-            "radius_miles": 20.0,
-            "min_beds": 3,
-            "min_baths": 2.0,
-            "home_types": ["SINGLE_FAMILY"]
-        }
-    }
-    
-    logger.debug(f"📋 Returning {len(examples)} example configurations")
-    return examples
 
 
 if __name__ == "__main__":

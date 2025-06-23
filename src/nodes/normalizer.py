@@ -20,10 +20,33 @@ def normalize_results(raw_items: List[Dict[str, Any]]) -> List[Listing]:
     listings = []
     seen_properties: Set[str] = set()
     
-    for item in raw_items:
+    print(f"Processing {len(raw_items)} raw items from APIFY...")
+    
+    # Show first item for debugging
+    if raw_items:
+        print(f"🔍 First raw item: {raw_items[0]}")
+    
+    for i, item in enumerate(raw_items):
+        # Skip empty or invalid items
+        if not item or not isinstance(item, dict):
+            continue
+            
+        # Check if item has any meaningful data
+        has_address = bool(item.get("address"))
+        has_price = bool(item.get("price") or item.get("unformattedPrice"))
+        has_zpid = bool(item.get("zpid"))
+        has_coordinates = bool(item.get("latLong") or (item.get("latitude") and item.get("longitude")))
+        
+        if not any([has_address, has_price, has_zpid, has_coordinates]):
+            continue
+        
         try:
             # Detect listing type and extract appropriate price
             listing_type, sale_price, rental_price = _extract_listing_type_and_prices(item)
+            
+            # Skip if we can't determine a valid listing type or price
+            if not listing_type or (not sale_price and not rental_price):
+                continue
             
             # Extract location data
             lat, lon = _extract_coordinates(item)
@@ -75,14 +98,28 @@ def normalize_results(raw_items: List[Dict[str, Any]]) -> List[Listing]:
             listings.append(listing)
             seen_properties.add(dedup_key)
             
+            # Show first normalized item for debugging
+            if len(listings) == 1:
+                print(f"✅ First normalized item: {normalized_data['address']} - ${price_for_dedup}")
+            
         except ValidationError as e:
-            print(f"Validation error for item {item}: {e}")
+            if i == 0:  # Only show error for first item
+                print(f"❌ Validation error for first item: {e}")
             continue
         except Exception as e:
-            print(f"Error processing item {item}: {e}")
+            if i == 0:  # Only show error for first item
+                print(f"❌ Error processing first item: {e}")
             continue
     
-    print(f"Normalized {len(listings)} listings from {len(raw_items)} raw items")
+    print(f"📊 Final result: Normalized {len(listings)} valid listings from {len(raw_items)} raw items")
+    
+    if len(listings) == 0:
+        print("⚠️  No valid listings found. This could mean:")
+        print("   1. APIFY returned empty/invalid data")
+        print("   2. Search criteria too restrictive")
+        print("   3. Zillow URL not generating results")
+        print("   4. APIFY actor configuration issue")
+    
     return listings
 
 

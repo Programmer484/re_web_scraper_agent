@@ -123,7 +123,6 @@ def run_search(query: SearchQuery) -> List[Dict[str, Any]]:
     
     # Build dynamic Zillow URL from search query
     search_url = build_zillow_url(query)
-    print(f"Generated Zillow URL: {search_url}")
     
     # Build actor input using searchUrls format
     actor_input = {
@@ -136,7 +135,7 @@ def run_search(query: SearchQuery) -> List[Dict[str, Any]]:
         "maxItems": MAX_RESULTS
     }
     
-    print(f"Running Zillow scraper with input: {actor_input}")
+    print(f"🤖 Running Zillow scraper...")
     
     # Run the actor
     try:
@@ -144,17 +143,16 @@ def run_search(query: SearchQuery) -> List[Dict[str, Any]]:
         
         # Fetch results
         results = []
-        for item in client.dataset(run["defaultDatasetId"]).iterate_items():
+        dataset_id = run["defaultDatasetId"]
+        
+        for item in client.dataset(dataset_id).iterate_items():
             results.append(item)
         
-        print(f"Retrieved {len(results)} raw listings from Zillow scraper")
+        print(f"📥 Retrieved {len(results)} raw items from APIFY")
         
-        if not results:
-            print("Warning: No results returned from Zillow scraper")
-            return []
-            
         return results
         
     except Exception as e:
-        print(f"Error calling Zillow scraper: {e}")
+        print(f"❌ Error calling APIFY Zillow scraper: {e}")
+        print(f"🔧 APIFY Token configured: {'Yes' if APIFY_TOKEN else 'No'}")
         raise 

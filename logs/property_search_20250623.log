@@ -1,0 +1,246 @@
+2025-06-23 15:26:02,344 - PropertySearchAgent - DEBUG - [config.py:49] - Logging configuration initialized
+2025-06-23 15:26:02,345 - PropertySearchAgent - DEBUG - [config.py:50] - Log level set to: DEBUG
+2025-06-23 15:26:02,345 - PropertySearchAgent - DEBUG - [config.py:51] - APIFY_TOKEN configured: Yes
+2025-06-23 15:26:02,798 - apify_client - DEBUG - [_http_client.py:162] - Sending request
+2025-06-23 15:26:02,799 - httpcore.connection - DEBUG - [_trace.py:47] - connect_tcp.started host='api.apify.com' port=443 local_address=None timeout=360 socket_options=None
+2025-06-23 15:26:02,955 - httpcore.connection - DEBUG - [_trace.py:47] - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x7f7424145cd0>
+2025-06-23 15:26:02,955 - httpcore.connection - DEBUG - [_trace.py:47] - start_tls.started ssl_context=<ssl.SSLContext object at 0x7f74240829d0> server_hostname='api.apify.com' timeout=360
+2025-06-23 15:26:03,120 - httpcore.connection - DEBUG - [_trace.py:47] - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x7f7424216300>
+2025-06-23 15:26:03,120 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.started request=<Request [b'POST']>
+2025-06-23 15:26:03,122 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.complete
+2025-06-23 15:26:03,122 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.started request=<Request [b'POST']>
+2025-06-23 15:26:03,123 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.complete
+2025-06-23 15:26:03,124 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.started request=<Request [b'POST']>
+2025-06-23 15:26:03,441 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.complete return_value=(b'HTTP/1.1', 201, b'Created', [(b'Date', b'Mon, 23 Jun 2025 21:26:03 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Cache-Control', b'no-cache, no-store, must-revalidate'), (b'Pragma', b'no-cache'), (b'Expires', b'0'), (b'Access-Control-Allow-Origin', b'*'), (b'Access-Control-Allow-Headers', b'User-Agent, Content-Type, Authorization, X-Apify-Request-Origin, openai-conversation-id, openai-ephemeral-user-id'), (b'Access-Control-Allow-Methods', b'GET, POST'), (b'Access-Control-Expose-Headers', b'X-Apify-Pagination-Total, X-Apify-Pagination-Offset, X-Apify-Pagination-Desc, X-Apify-Pagination-Count, X-Apify-Pagination-Limit'), (b'Referrer-Policy', b'no-referrer'), (b'X-Robots-Tag', b'none'), (b'X-RateLimit-Limit', b'200'), (b'Location', b'https://api.apify.com/v2/actor-runs/lZEDQYu1ZjeIM3KwK'), (b'Vary', b'Accept-Encoding'), (b'Content-Encoding', b'gzip')])
+2025-06-23 15:26:03,444 - httpx - INFO - [_client.py:1025] - HTTP Request: POST https://api.apify.com/v2/acts/maxcopell~zillow-scraper/runs "HTTP/1.1 201 Created"
+2025-06-23 15:26:03,444 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.started request=<Request [b'POST']>
+2025-06-23 15:26:03,446 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.complete
+2025-06-23 15:26:03,446 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.started
+2025-06-23 15:26:03,447 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.complete
+2025-06-23 15:26:03,448 - apify_client - DEBUG - [_http_client.py:191] - Request successful
+2025-06-23 15:26:03,460 - apify_client - DEBUG - [_http_client.py:162] - Sending request
+2025-06-23 15:26:03,462 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:03,463 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.complete
+2025-06-23 15:26:03,463 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.started request=<Request [b'GET']>
+2025-06-23 15:26:03,464 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.complete
+2025-06-23 15:26:03,464 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:03,584 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 23 Jun 2025 21:26:03 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Cache-Control', b'no-cache, no-store, must-revalidate'), (b'Pragma', b'no-cache'), (b'Expires', b'0'), (b'Access-Control-Allow-Origin', b'*'), (b'Access-Control-Allow-Headers', b'User-Agent, Content-Type, Authorization, X-Apify-Request-Origin, openai-conversation-id, openai-ephemeral-user-id'), (b'Access-Control-Allow-Methods', b'GET, PUT, DELETE'), (b'Access-Control-Expose-Headers', b'X-Apify-Pagination-Total, X-Apify-Pagination-Offset, X-Apify-Pagination-Desc, X-Apify-Pagination-Count, X-Apify-Pagination-Limit'), (b'Referrer-Policy', b'no-referrer'), (b'X-Robots-Tag', b'none'), (b'X-RateLimit-Limit', b'30'), (b'Vary', b'Accept-Encoding'), (b'Content-Encoding', b'gzip')])
+2025-06-23 15:26:03,586 - httpx - INFO - [_client.py:1025] - HTTP Request: GET https://api.apify.com/v2/actor-runs/lZEDQYu1ZjeIM3KwK "HTTP/1.1 200 OK"
+2025-06-23 15:26:03,586 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.started request=<Request [b'GET']>
+2025-06-23 15:26:03,588 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.complete
+2025-06-23 15:26:03,588 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.started
+2025-06-23 15:26:03,588 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.complete
+2025-06-23 15:26:03,589 - apify_client - DEBUG - [_http_client.py:191] - Request successful
+2025-06-23 15:26:03,591 - apify_client - DEBUG - [_http_client.py:162] - Sending request
+2025-06-23 15:26:03,593 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:03,594 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.complete
+2025-06-23 15:26:03,595 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.started request=<Request [b'GET']>
+2025-06-23 15:26:03,596 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.complete
+2025-06-23 15:26:03,596 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:03,709 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 23 Jun 2025 21:26:03 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Cache-Control', b'no-cache, no-store, must-revalidate'), (b'Pragma', b'no-cache'), (b'Expires', b'0'), (b'Access-Control-Allow-Origin', b'*'), (b'Access-Control-Allow-Headers', b'User-Agent, Content-Type, Authorization, X-Apify-Request-Origin, openai-conversation-id, openai-ephemeral-user-id'), (b'Access-Control-Allow-Methods', b'GET, PUT, DELETE'), (b'Access-Control-Expose-Headers', b'X-Apify-Pagination-Total, X-Apify-Pagination-Offset, X-Apify-Pagination-Desc, X-Apify-Pagination-Count, X-Apify-Pagination-Limit'), (b'Referrer-Policy', b'no-referrer'), (b'X-Robots-Tag', b'none'), (b'X-RateLimit-Limit', b'30'), (b'ETag', b'W/"da6-dAoDtSojvxXyn4pSdppd4Yq95HA"'), (b'Vary', b'Accept-Encoding'), (b'Content-Encoding', b'gzip')])
+2025-06-23 15:26:03,710 - httpx - INFO - [_client.py:1025] - HTTP Request: GET https://api.apify.com/v2/acts/X46xKaa20oUA1fRiP "HTTP/1.1 200 OK"
+2025-06-23 15:26:03,711 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.started request=<Request [b'GET']>
+2025-06-23 15:26:03,712 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.complete
+2025-06-23 15:26:03,713 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.started
+2025-06-23 15:26:03,713 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.complete
+2025-06-23 15:26:03,714 - apify_client - DEBUG - [_http_client.py:191] - Request successful
+2025-06-23 15:26:03,717 - apify_client - DEBUG - [_http_client.py:162] - Sending request
+2025-06-23 15:26:03,717 - apify_client - DEBUG - [_http_client.py:162] - Sending request
+2025-06-23 15:26:03,719 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:03,720 - httpcore.connection - DEBUG - [_trace.py:47] - connect_tcp.started host='api.apify.com' port=443 local_address=None timeout=360 socket_options=None
+2025-06-23 15:26:03,721 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.complete
+2025-06-23 15:26:03,721 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.started request=<Request [b'GET']>
+2025-06-23 15:26:03,722 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.complete
+2025-06-23 15:26:03,722 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:03,818 - httpcore.connection - DEBUG - [_trace.py:47] - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x7f7424167f20>
+2025-06-23 15:26:03,818 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 23 Jun 2025 21:26:03 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Cache-Control', b'no-cache, no-store, must-revalidate'), (b'Pragma', b'no-cache'), (b'Expires', b'0'), (b'Access-Control-Allow-Origin', b'*'), (b'Access-Control-Allow-Headers', b'User-Agent, Content-Type, Authorization, X-Apify-Request-Origin, openai-conversation-id, openai-ephemeral-user-id'), (b'Access-Control-Allow-Methods', b'GET, PUT, DELETE'), (b'Access-Control-Expose-Headers', b'X-Apify-Pagination-Total, X-Apify-Pagination-Offset, X-Apify-Pagination-Desc, X-Apify-Pagination-Count, X-Apify-Pagination-Limit'), (b'Referrer-Policy', b'no-referrer'), (b'X-Robots-Tag', b'none'), (b'X-RateLimit-Limit', b'30'), (b'Vary', b'Accept-Encoding'), (b'Content-Encoding', b'gzip')])
+2025-06-23 15:26:03,818 - httpcore.connection - DEBUG - [_trace.py:47] - start_tls.started ssl_context=<ssl.SSLContext object at 0x7f74240829d0> server_hostname='api.apify.com' timeout=360
+2025-06-23 15:26:03,819 - httpx - INFO - [_client.py:1025] - HTTP Request: GET https://api.apify.com/v2/actor-runs/lZEDQYu1ZjeIM3KwK "HTTP/1.1 200 OK"
+2025-06-23 15:26:03,819 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.started request=<Request [b'GET']>
+2025-06-23 15:26:03,819 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.complete
+2025-06-23 15:26:03,819 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.started
+2025-06-23 15:26:03,820 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.complete
+2025-06-23 15:26:03,820 - apify_client - DEBUG - [_http_client.py:191] - Request successful
+2025-06-23 15:26:04,052 - httpcore.connection - DEBUG - [_trace.py:47] - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x7f74240db020>
+2025-06-23 15:26:04,053 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:04,054 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.complete
+2025-06-23 15:26:04,055 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.started request=<Request [b'GET']>
+2025-06-23 15:26:04,055 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.complete
+2025-06-23 15:26:04,055 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:04,183 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 23 Jun 2025 21:26:04 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Cache-Control', b'no-cache, no-store, must-revalidate'), (b'Pragma', b'no-cache'), (b'Expires', b'0'), (b'Access-Control-Allow-Origin', b'*'), (b'Access-Control-Allow-Headers', b'User-Agent, Content-Type, Authorization, X-Apify-Request-Origin, openai-conversation-id, openai-ephemeral-user-id'), (b'Access-Control-Allow-Methods', b'GET, PUT, DELETE'), (b'Access-Control-Expose-Headers', b'X-Apify-Pagination-Total, X-Apify-Pagination-Offset, X-Apify-Pagination-Desc, X-Apify-Pagination-Count, X-Apify-Pagination-Limit'), (b'Referrer-Policy', b'no-referrer'), (b'X-Robots-Tag', b'none'), (b'X-RateLimit-Limit', b'30'), (b'Vary', b'Accept-Encoding'), (b'Content-Encoding', b'gzip')])
+2025-06-23 15:26:04,185 - httpx - INFO - [_client.py:1025] - HTTP Request: GET https://api.apify.com/v2/actor-runs/lZEDQYu1ZjeIM3KwK "HTTP/1.1 200 OK"
+2025-06-23 15:26:04,185 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.started request=<Request [b'GET']>
+2025-06-23 15:26:04,187 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.complete
+2025-06-23 15:26:04,187 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.started
+2025-06-23 15:26:04,188 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.complete
+2025-06-23 15:26:04,188 - apify_client - DEBUG - [_http_client.py:191] - Request successful
+2025-06-23 15:26:04,190 - apify_client - DEBUG - [_http_client.py:162] - Sending request
+2025-06-23 15:26:04,192 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:04,193 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.complete
+2025-06-23 15:26:04,193 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.started request=<Request [b'GET']>
+2025-06-23 15:26:04,194 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.complete
+2025-06-23 15:26:04,194 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:04,323 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 23 Jun 2025 21:26:04 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Cache-Control', b'no-cache, no-store, must-revalidate'), (b'Pragma', b'no-cache'), (b'Expires', b'0'), (b'Access-Control-Allow-Origin', b'*'), (b'Access-Control-Allow-Headers', b'User-Agent, Content-Type, Authorization, X-Apify-Request-Origin, openai-conversation-id, openai-ephemeral-user-id'), (b'Access-Control-Allow-Methods', b'GET, PUT, DELETE'), (b'Access-Control-Expose-Headers', b'X-Apify-Pagination-Total, X-Apify-Pagination-Offset, X-Apify-Pagination-Desc, X-Apify-Pagination-Count, X-Apify-Pagination-Limit'), (b'Referrer-Policy', b'no-referrer'), (b'X-Robots-Tag', b'none'), (b'X-RateLimit-Limit', b'30'), (b'ETag', b'W/"da6-dAoDtSojvxXyn4pSdppd4Yq95HA"'), (b'Vary', b'Accept-Encoding'), (b'Content-Encoding', b'gzip')])
+2025-06-23 15:26:04,324 - httpx - INFO - [_client.py:1025] - HTTP Request: GET https://api.apify.com/v2/acts/X46xKaa20oUA1fRiP "HTTP/1.1 200 OK"
+2025-06-23 15:26:04,325 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.started request=<Request [b'GET']>
+2025-06-23 15:26:04,327 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.complete
+2025-06-23 15:26:04,327 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.started
+2025-06-23 15:26:04,328 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.complete
+2025-06-23 15:26:04,328 - apify_client - DEBUG - [_http_client.py:191] - Request successful
+2025-06-23 15:26:04,333 - apify_client - DEBUG - [_http_client.py:162] - Sending request
+2025-06-23 15:26:04,334 - apify_client - DEBUG - [_http_client.py:162] - Sending request
+2025-06-23 15:26:04,336 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:04,338 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:04,340 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.complete
+2025-06-23 15:26:04,340 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.started request=<Request [b'GET']>
+2025-06-23 15:26:04,341 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.complete
+2025-06-23 15:26:04,341 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.complete
+2025-06-23 15:26:04,342 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.started request=<Request [b'GET']>
+2025-06-23 15:26:04,343 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:04,344 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.complete
+2025-06-23 15:26:04,345 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:04,458 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 23 Jun 2025 21:26:04 GMT'), (b'Content-Type', b'text/plain; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Cache-Control', b'no-transform'), (b'Pragma', b'no-cache'), (b'Expires', b'0'), (b'Access-Control-Allow-Origin', b'*'), (b'Access-Control-Allow-Headers', b'User-Agent, Content-Type, Authorization, X-Apify-Request-Origin, openai-conversation-id, openai-ephemeral-user-id'), (b'Access-Control-Allow-Methods', b'GET'), (b'Access-Control-Expose-Headers', b'X-Apify-Pagination-Total, X-Apify-Pagination-Offset, X-Apify-Pagination-Desc, X-Apify-Pagination-Count, X-Apify-Pagination-Limit'), (b'Referrer-Policy', b'no-referrer'), (b'X-Robots-Tag', b'none'), (b'X-RateLimit-Limit', b'30'), (b'Content-Disposition', b'inline; filename="lZEDQYu1ZjeIM3KwK.log"')])
+2025-06-23 15:26:04,460 - httpx - INFO - [_client.py:1025] - HTTP Request: GET https://api.apify.com/v2/actor-runs/lZEDQYu1ZjeIM3KwK/log?stream=1&raw=1 "HTTP/1.1 200 OK"
+2025-06-23 15:26:04,460 - apify_client - DEBUG - [_http_client.py:191] - Request successful
+2025-06-23 15:26:04,460 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.started request=<Request [b'GET']>
+2025-06-23 15:26:04,820 - apify_client - DEBUG - [_http_client.py:162] - Sending request
+2025-06-23 15:26:04,822 - httpcore.connection - DEBUG - [_trace.py:47] - connect_tcp.started host='api.apify.com' port=443 local_address=None timeout=360 socket_options=None
+2025-06-23 15:26:04,940 - httpcore.connection - DEBUG - [_trace.py:47] - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x7f7424102f60>
+2025-06-23 15:26:04,940 - httpcore.connection - DEBUG - [_trace.py:47] - start_tls.started ssl_context=<ssl.SSLContext object at 0x7f74240829d0> server_hostname='api.apify.com' timeout=360
+2025-06-23 15:26:05,109 - httpcore.connection - DEBUG - [_trace.py:47] - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x7f7424102e40>
+2025-06-23 15:26:05,109 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:05,111 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.complete
+2025-06-23 15:26:05,111 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.started request=<Request [b'GET']>
+2025-06-23 15:26:05,112 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.complete
+2025-06-23 15:26:05,112 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:05,214 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 23 Jun 2025 21:26:05 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Cache-Control', b'no-cache, no-store, must-revalidate'), (b'Pragma', b'no-cache'), (b'Expires', b'0'), (b'Access-Control-Allow-Origin', b'*'), (b'Access-Control-Allow-Headers', b'User-Agent, Content-Type, Authorization, X-Apify-Request-Origin, openai-conversation-id, openai-ephemeral-user-id'), (b'Access-Control-Allow-Methods', b'GET, PUT, DELETE'), (b'Access-Control-Expose-Headers', b'X-Apify-Pagination-Total, X-Apify-Pagination-Offset, X-Apify-Pagination-Desc, X-Apify-Pagination-Count, X-Apify-Pagination-Limit'), (b'Referrer-Policy', b'no-referrer'), (b'X-Robots-Tag', b'none'), (b'X-RateLimit-Limit', b'30'), (b'Vary', b'Accept-Encoding'), (b'Content-Encoding', b'gzip')])
+2025-06-23 15:26:05,215 - httpx - INFO - [_client.py:1025] - HTTP Request: GET https://api.apify.com/v2/actor-runs/lZEDQYu1ZjeIM3KwK "HTTP/1.1 200 OK"
+2025-06-23 15:26:05,215 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.started request=<Request [b'GET']>
+2025-06-23 15:26:05,217 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.complete
+2025-06-23 15:26:05,217 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.started
+2025-06-23 15:26:05,217 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.complete
+2025-06-23 15:26:05,218 - apify_client - DEBUG - [_http_client.py:191] - Request successful
+2025-06-23 15:26:05,455 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 23 Jun 2025 21:26:05 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Cache-Control', b'no-cache, no-store, must-revalidate'), (b'Pragma', b'no-cache'), (b'Expires', b'0'), (b'Access-Control-Allow-Origin', b'*'), (b'Access-Control-Allow-Headers', b'User-Agent, Content-Type, Authorization, X-Apify-Request-Origin, openai-conversation-id, openai-ephemeral-user-id'), (b'Access-Control-Allow-Methods', b'GET, PUT, DELETE'), (b'Access-Control-Expose-Headers', b'X-Apify-Pagination-Total, X-Apify-Pagination-Offset, X-Apify-Pagination-Desc, X-Apify-Pagination-Count, X-Apify-Pagination-Limit'), (b'Referrer-Policy', b'no-referrer'), (b'X-Robots-Tag', b'none'), (b'X-RateLimit-Limit', b'30'), (b'Vary', b'Accept-Encoding'), (b'Content-Encoding', b'gzip')])
+2025-06-23 15:26:05,456 - httpx - INFO - [_client.py:1025] - HTTP Request: GET https://api.apify.com/v2/actor-runs/lZEDQYu1ZjeIM3KwK?waitForFinish=999999 "HTTP/1.1 200 OK"
+2025-06-23 15:26:05,457 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.started request=<Request [b'GET']>
+2025-06-23 15:26:06,219 - apify_client - DEBUG - [_http_client.py:162] - Sending request
+2025-06-23 15:26:06,221 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:06,222 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.complete
+2025-06-23 15:26:06,222 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.started request=<Request [b'GET']>
+2025-06-23 15:26:06,223 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.complete
+2025-06-23 15:26:06,223 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:06,318 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 23 Jun 2025 21:26:06 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Cache-Control', b'no-cache, no-store, must-revalidate'), (b'Pragma', b'no-cache'), (b'Expires', b'0'), (b'Access-Control-Allow-Origin', b'*'), (b'Access-Control-Allow-Headers', b'User-Agent, Content-Type, Authorization, X-Apify-Request-Origin, openai-conversation-id, openai-ephemeral-user-id'), (b'Access-Control-Allow-Methods', b'GET, PUT, DELETE'), (b'Access-Control-Expose-Headers', b'X-Apify-Pagination-Total, X-Apify-Pagination-Offset, X-Apify-Pagination-Desc, X-Apify-Pagination-Count, X-Apify-Pagination-Limit'), (b'Referrer-Policy', b'no-referrer'), (b'X-Robots-Tag', b'none'), (b'X-RateLimit-Limit', b'30'), (b'Vary', b'Accept-Encoding'), (b'Content-Encoding', b'gzip')])
+2025-06-23 15:26:06,319 - httpx - INFO - [_client.py:1025] - HTTP Request: GET https://api.apify.com/v2/actor-runs/lZEDQYu1ZjeIM3KwK "HTTP/1.1 200 OK"
+2025-06-23 15:26:06,320 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.started request=<Request [b'GET']>
+2025-06-23 15:26:06,321 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.complete
+2025-06-23 15:26:06,322 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.started
+2025-06-23 15:26:06,322 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.complete
+2025-06-23 15:26:06,323 - apify_client - DEBUG - [_http_client.py:191] - Request successful
+2025-06-23 15:26:07,324 - apify_client - DEBUG - [_http_client.py:162] - Sending request
+2025-06-23 15:26:07,325 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:07,326 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.complete
+2025-06-23 15:26:07,327 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.started request=<Request [b'GET']>
+2025-06-23 15:26:07,327 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.complete
+2025-06-23 15:26:07,327 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:07,421 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 23 Jun 2025 21:26:07 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Cache-Control', b'no-cache, no-store, must-revalidate'), (b'Pragma', b'no-cache'), (b'Expires', b'0'), (b'Access-Control-Allow-Origin', b'*'), (b'Access-Control-Allow-Headers', b'User-Agent, Content-Type, Authorization, X-Apify-Request-Origin, openai-conversation-id, openai-ephemeral-user-id'), (b'Access-Control-Allow-Methods', b'GET, PUT, DELETE'), (b'Access-Control-Expose-Headers', b'X-Apify-Pagination-Total, X-Apify-Pagination-Offset, X-Apify-Pagination-Desc, X-Apify-Pagination-Count, X-Apify-Pagination-Limit'), (b'Referrer-Policy', b'no-referrer'), (b'X-Robots-Tag', b'none'), (b'X-RateLimit-Limit', b'30'), (b'Vary', b'Accept-Encoding'), (b'Content-Encoding', b'gzip')])
+2025-06-23 15:26:07,423 - httpx - INFO - [_client.py:1025] - HTTP Request: GET https://api.apify.com/v2/actor-runs/lZEDQYu1ZjeIM3KwK "HTTP/1.1 200 OK"
+2025-06-23 15:26:07,423 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.started request=<Request [b'GET']>
+2025-06-23 15:26:07,424 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.complete
+2025-06-23 15:26:07,425 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.started
+2025-06-23 15:26:07,425 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.complete
+2025-06-23 15:26:07,426 - apify_client - DEBUG - [_http_client.py:191] - Request successful
+2025-06-23 15:26:08,428 - apify_client - DEBUG - [_http_client.py:162] - Sending request
+2025-06-23 15:26:08,430 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:08,431 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.complete
+2025-06-23 15:26:08,431 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.started request=<Request [b'GET']>
+2025-06-23 15:26:08,431 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.complete
+2025-06-23 15:26:08,432 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:08,528 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 23 Jun 2025 21:26:08 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Cache-Control', b'no-cache, no-store, must-revalidate'), (b'Pragma', b'no-cache'), (b'Expires', b'0'), (b'Access-Control-Allow-Origin', b'*'), (b'Access-Control-Allow-Headers', b'User-Agent, Content-Type, Authorization, X-Apify-Request-Origin, openai-conversation-id, openai-ephemeral-user-id'), (b'Access-Control-Allow-Methods', b'GET, PUT, DELETE'), (b'Access-Control-Expose-Headers', b'X-Apify-Pagination-Total, X-Apify-Pagination-Offset, X-Apify-Pagination-Desc, X-Apify-Pagination-Count, X-Apify-Pagination-Limit'), (b'Referrer-Policy', b'no-referrer'), (b'X-Robots-Tag', b'none'), (b'X-RateLimit-Limit', b'30'), (b'Vary', b'Accept-Encoding'), (b'Content-Encoding', b'gzip')])
+2025-06-23 15:26:08,529 - httpx - INFO - [_client.py:1025] - HTTP Request: GET https://api.apify.com/v2/actor-runs/lZEDQYu1ZjeIM3KwK "HTTP/1.1 200 OK"
+2025-06-23 15:26:08,530 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.started request=<Request [b'GET']>
+2025-06-23 15:26:08,531 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.complete
+2025-06-23 15:26:08,531 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.started
+2025-06-23 15:26:08,531 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.complete
+2025-06-23 15:26:08,531 - apify_client - DEBUG - [_http_client.py:191] - Request successful
+2025-06-23 15:26:09,533 - apify_client - DEBUG - [_http_client.py:162] - Sending request
+2025-06-23 15:26:09,534 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:09,535 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.complete
+2025-06-23 15:26:09,535 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.started request=<Request [b'GET']>
+2025-06-23 15:26:09,536 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.complete
+2025-06-23 15:26:09,536 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:09,713 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 23 Jun 2025 21:26:09 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Cache-Control', b'no-cache, no-store, must-revalidate'), (b'Pragma', b'no-cache'), (b'Expires', b'0'), (b'Access-Control-Allow-Origin', b'*'), (b'Access-Control-Allow-Headers', b'User-Agent, Content-Type, Authorization, X-Apify-Request-Origin, openai-conversation-id, openai-ephemeral-user-id'), (b'Access-Control-Allow-Methods', b'GET, PUT, DELETE'), (b'Access-Control-Expose-Headers', b'X-Apify-Pagination-Total, X-Apify-Pagination-Offset, X-Apify-Pagination-Desc, X-Apify-Pagination-Count, X-Apify-Pagination-Limit'), (b'Referrer-Policy', b'no-referrer'), (b'X-Robots-Tag', b'none'), (b'X-RateLimit-Limit', b'30'), (b'Vary', b'Accept-Encoding'), (b'Content-Encoding', b'gzip')])
+2025-06-23 15:26:09,714 - httpx - INFO - [_client.py:1025] - HTTP Request: GET https://api.apify.com/v2/actor-runs/lZEDQYu1ZjeIM3KwK "HTTP/1.1 200 OK"
+2025-06-23 15:26:09,715 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.started request=<Request [b'GET']>
+2025-06-23 15:26:09,716 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.complete
+2025-06-23 15:26:09,716 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.started
+2025-06-23 15:26:09,717 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.complete
+2025-06-23 15:26:09,717 - apify_client - DEBUG - [_http_client.py:191] - Request successful
+2025-06-23 15:26:10,719 - apify_client - DEBUG - [_http_client.py:162] - Sending request
+2025-06-23 15:26:10,721 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:10,721 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.complete
+2025-06-23 15:26:10,722 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.started request=<Request [b'GET']>
+2025-06-23 15:26:10,722 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.complete
+2025-06-23 15:26:10,723 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:10,820 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 23 Jun 2025 21:26:10 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Cache-Control', b'no-cache, no-store, must-revalidate'), (b'Pragma', b'no-cache'), (b'Expires', b'0'), (b'Access-Control-Allow-Origin', b'*'), (b'Access-Control-Allow-Headers', b'User-Agent, Content-Type, Authorization, X-Apify-Request-Origin, openai-conversation-id, openai-ephemeral-user-id'), (b'Access-Control-Allow-Methods', b'GET, PUT, DELETE'), (b'Access-Control-Expose-Headers', b'X-Apify-Pagination-Total, X-Apify-Pagination-Offset, X-Apify-Pagination-Desc, X-Apify-Pagination-Count, X-Apify-Pagination-Limit'), (b'Referrer-Policy', b'no-referrer'), (b'X-Robots-Tag', b'none'), (b'X-RateLimit-Limit', b'30'), (b'Vary', b'Accept-Encoding'), (b'Content-Encoding', b'gzip')])
+2025-06-23 15:26:10,821 - httpx - INFO - [_client.py:1025] - HTTP Request: GET https://api.apify.com/v2/actor-runs/lZEDQYu1ZjeIM3KwK "HTTP/1.1 200 OK"
+2025-06-23 15:26:10,822 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.started request=<Request [b'GET']>
+2025-06-23 15:26:10,824 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.complete
+2025-06-23 15:26:10,824 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.started
+2025-06-23 15:26:10,824 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.complete
+2025-06-23 15:26:10,825 - apify_client - DEBUG - [_http_client.py:191] - Request successful
+2025-06-23 15:26:11,827 - apify_client - DEBUG - [_http_client.py:162] - Sending request
+2025-06-23 15:26:11,828 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:11,829 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.complete
+2025-06-23 15:26:11,830 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.started request=<Request [b'GET']>
+2025-06-23 15:26:11,830 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.complete
+2025-06-23 15:26:11,831 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:11,933 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 23 Jun 2025 21:26:11 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Cache-Control', b'no-cache, no-store, must-revalidate'), (b'Pragma', b'no-cache'), (b'Expires', b'0'), (b'Access-Control-Allow-Origin', b'*'), (b'Access-Control-Allow-Headers', b'User-Agent, Content-Type, Authorization, X-Apify-Request-Origin, openai-conversation-id, openai-ephemeral-user-id'), (b'Access-Control-Allow-Methods', b'GET, PUT, DELETE'), (b'Access-Control-Expose-Headers', b'X-Apify-Pagination-Total, X-Apify-Pagination-Offset, X-Apify-Pagination-Desc, X-Apify-Pagination-Count, X-Apify-Pagination-Limit'), (b'Referrer-Policy', b'no-referrer'), (b'X-Robots-Tag', b'none'), (b'X-RateLimit-Limit', b'30'), (b'Vary', b'Accept-Encoding'), (b'Content-Encoding', b'gzip')])
+2025-06-23 15:26:11,935 - httpx - INFO - [_client.py:1025] - HTTP Request: GET https://api.apify.com/v2/actor-runs/lZEDQYu1ZjeIM3KwK "HTTP/1.1 200 OK"
+2025-06-23 15:26:11,936 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.started request=<Request [b'GET']>
+2025-06-23 15:26:11,937 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.complete
+2025-06-23 15:26:11,938 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.started
+2025-06-23 15:26:11,938 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.complete
+2025-06-23 15:26:11,939 - apify_client - DEBUG - [_http_client.py:191] - Request successful
+2025-06-23 15:26:12,926 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.complete
+2025-06-23 15:26:12,927 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.started
+2025-06-23 15:26:12,927 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.complete
+2025-06-23 15:26:12,928 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.complete
+2025-06-23 15:26:12,929 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.started
+2025-06-23 15:26:12,929 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.complete
+2025-06-23 15:26:12,930 - apify_client - DEBUG - [_http_client.py:191] - Request successful
+2025-06-23 15:26:12,941 - apify_client - DEBUG - [_http_client.py:162] - Sending request
+2025-06-23 15:26:12,942 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:12,943 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.complete
+2025-06-23 15:26:12,944 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.started request=<Request [b'GET']>
+2025-06-23 15:26:12,944 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.complete
+2025-06-23 15:26:12,945 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:13,052 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 23 Jun 2025 21:26:13 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Cache-Control', b'no-cache, no-store, must-revalidate'), (b'Pragma', b'no-cache'), (b'Expires', b'0'), (b'Access-Control-Allow-Origin', b'*'), (b'Access-Control-Allow-Headers', b'User-Agent, Content-Type, Authorization, X-Apify-Request-Origin, openai-conversation-id, openai-ephemeral-user-id'), (b'Access-Control-Allow-Methods', b'GET, PUT, DELETE'), (b'Access-Control-Expose-Headers', b'X-Apify-Pagination-Total, X-Apify-Pagination-Offset, X-Apify-Pagination-Desc, X-Apify-Pagination-Count, X-Apify-Pagination-Limit'), (b'Referrer-Policy', b'no-referrer'), (b'X-Robots-Tag', b'none'), (b'X-RateLimit-Limit', b'30'), (b'Vary', b'Accept-Encoding'), (b'Content-Encoding', b'gzip')])
+2025-06-23 15:26:13,052 - httpx - INFO - [_client.py:1025] - HTTP Request: GET https://api.apify.com/v2/actor-runs/lZEDQYu1ZjeIM3KwK "HTTP/1.1 200 OK"
+2025-06-23 15:26:13,053 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.started request=<Request [b'GET']>
+2025-06-23 15:26:13,053 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.complete
+2025-06-23 15:26:13,053 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.started
+2025-06-23 15:26:13,053 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.complete
+2025-06-23 15:26:13,053 - apify_client - DEBUG - [_http_client.py:191] - Request successful
+2025-06-23 15:26:18,931 - apify_client - DEBUG - [_http_client.py:162] - Sending request
+2025-06-23 15:26:18,933 - httpcore.connection - DEBUG - [_trace.py:47] - close.started
+2025-06-23 15:26:18,934 - httpcore.connection - DEBUG - [_trace.py:47] - close.complete
+2025-06-23 15:26:18,935 - httpcore.connection - DEBUG - [_trace.py:47] - close.started
+2025-06-23 15:26:18,935 - httpcore.connection - DEBUG - [_trace.py:47] - close.complete
+2025-06-23 15:26:18,936 - httpcore.connection - DEBUG - [_trace.py:47] - close.started
+2025-06-23 15:26:18,936 - httpcore.connection - DEBUG - [_trace.py:47] - close.complete
+2025-06-23 15:26:18,936 - httpcore.connection - DEBUG - [_trace.py:47] - connect_tcp.started host='api.apify.com' port=443 local_address=None timeout=360 socket_options=None
+2025-06-23 15:26:19,070 - httpcore.connection - DEBUG - [_trace.py:47] - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x7f7424124a10>
+2025-06-23 15:26:19,071 - httpcore.connection - DEBUG - [_trace.py:47] - start_tls.started ssl_context=<ssl.SSLContext object at 0x7f74240829d0> server_hostname='api.apify.com' timeout=360
+2025-06-23 15:26:19,236 - httpcore.connection - DEBUG - [_trace.py:47] - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x7f7424124c80>
+2025-06-23 15:26:19,236 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:19,237 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_headers.complete
+2025-06-23 15:26:19,238 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.started request=<Request [b'GET']>
+2025-06-23 15:26:19,238 - httpcore.http11 - DEBUG - [_trace.py:47] - send_request_body.complete
+2025-06-23 15:26:19,239 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.started request=<Request [b'GET']>
+2025-06-23 15:26:19,415 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 23 Jun 2025 21:26:19 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Cache-Control', b'no-cache, no-store, must-revalidate'), (b'Pragma', b'no-cache'), (b'Expires', b'0'), (b'Access-Control-Allow-Origin', b'*'), (b'Access-Control-Allow-Headers', b'User-Agent, Content-Type, Authorization, X-Apify-Request-Origin, openai-conversation-id, openai-ephemeral-user-id'), (b'Access-Control-Allow-Methods', b'GET, HEAD, POST'), (b'Access-Control-Expose-Headers', b'X-Apify-Pagination-Total, X-Apify-Pagination-Offset, X-Apify-Pagination-Desc, X-Apify-Pagination-Count, X-Apify-Pagination-Limit'), (b'Referrer-Policy', b'no-referrer'), (b'X-Robots-Tag', b'none'), (b'X-RateLimit-Limit', b'30'), (b'X-Apify-Pagination-Total', b'603'), (b'X-Apify-Pagination-Offset', b'0'), (b'X-Apify-Pagination-Count', b'603'), (b'X-Apify-Pagination-Limit', b'1000'), (b'X-Apify-Pagination-Desc', b'false'), (b'Vary', b'Accept-Encoding'), (b'Content-Encoding', b'gzip')])
+2025-06-23 15:26:19,417 - httpx - INFO - [_client.py:1025] - HTTP Request: GET https://api.apify.com/v2/datasets/06wVbpbOAQhe1YS0L/items?offset=0&limit=1000 "HTTP/1.1 200 OK"
+2025-06-23 15:26:19,417 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.started request=<Request [b'GET']>
+2025-06-23 15:26:19,698 - httpcore.http11 - DEBUG - [_trace.py:47] - receive_response_body.complete
+2025-06-23 15:26:19,698 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.started
+2025-06-23 15:26:19,699 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.complete
+2025-06-23 15:26:19,702 - apify_client - DEBUG - [_http_client.py:191] - Request successful

@@ -138,6 +138,27 @@ def output_results(listings: List[Listing]):
     Output the normalized listings as JSON.
     For MVP, prints to stdout. Later versions may save to file or database.
     """
+    # Check if we have any actual results
+    if not listings:
+        print("\n" + "="*50)
+        print("NO PROPERTIES FOUND")
+        print("="*50)
+        print("🚫 The search returned 0 properties.")
+        print("")
+        print("💡 Possible reasons:")
+        print("   • Search criteria too restrictive")
+        print("   • No properties available in the area")
+        print("   • APIFY/Zillow scraper issue")
+        print("   • Invalid coordinates or search parameters")
+        print("")
+        print("🔧 Try adjusting your search:")
+        print("   • Increase radius_miles")
+        print("   • Remove price filters")
+        print("   • Remove bed/bath requirements")
+        print("   • Use listing_type='both' instead of specific type")
+        print("="*50)
+        return
+    
     # Convert Pydantic models to dict for JSON serialization
     listings_data = []
     sale_count = 0
@@ -169,10 +190,10 @@ def output_results(listings: List[Listing]):
     print("="*50)
     print(json.dumps(listings_data, indent=2, default=str))
     
-    # Optional: save to file
+    # Only save to file if we have actual results
     with open("results.json", "w") as f:
         json.dump(listings_data, f, indent=2, default=str)
-    print(f"\nResults also saved to results.json")
+    print(f"\n✅ Results saved to results.json")
     
     # Show example of the new structure
     if listings:
