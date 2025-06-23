@@ -38,18 +38,13 @@ def main(filters: dict = None, filters_file: str = None):
         print(f"Search query: {query.model_dump()}")
         
         # Step 2: Run Zillow search
-        print("Running Zillow search...")
         raw_results = zillow_node.run_search(query)
         
         # Step 3: Normalize results
-        print("Normalizing results...")
         listings = normalizer.normalize_results(raw_results)
         
         # Step 4: Output results
-        print("Outputting results...")
         output_results(listings)
-        
-        print(f"Zillow-Agent completed successfully! Found {len(listings)} properties.")
         return listings
         
     except Exception as e:

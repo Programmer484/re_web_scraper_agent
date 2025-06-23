@@ -247,3 +247,12 @@
 2025-06-23 15:49:26,676 - PropertySearchAgent - DEBUG - [config.py:55] - Logging configuration initialized
 2025-06-23 15:49:26,676 - PropertySearchAgent - DEBUG - [config.py:56] - Log level set to: DEBUG
 2025-06-23 15:49:26,676 - PropertySearchAgent - DEBUG - [config.py:57] - APIFY_TOKEN configured: Yes
+2025-06-23 16:08:06,997 - PropertySearchAgent - DEBUG - [config.py:58] - Logging configuration initialized
+2025-06-23 16:08:06,997 - PropertySearchAgent - DEBUG - [config.py:59] - Log level set to: DEBUG
+2025-06-23 16:08:06,997 - PropertySearchAgent - DEBUG - [config.py:60] - APIFY_TOKEN configured: Yes
+2025-06-23 16:10:10,523 - PropertySearchAgent - DEBUG - [config.py:58] - Logging configuration initialized
+2025-06-23 16:10:10,523 - PropertySearchAgent - DEBUG - [config.py:59] - Log level set to: DEBUG
+2025-06-23 16:10:10,523 - PropertySearchAgent - DEBUG - [config.py:60] - APIFY_TOKEN configured: Yes
+2025-06-23 16:10:26,646 - PropertySearchAgent - DEBUG - [config.py:58] - Logging configuration initialized
+2025-06-23 16:10:26,646 - PropertySearchAgent - DEBUG - [config.py:59] - Log level set to: DEBUG
+2025-06-23 16:10:26,646 - PropertySearchAgent - DEBUG - [config.py:60] - APIFY_TOKEN configured: Yes

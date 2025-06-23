@@ -16,6 +16,9 @@ ZILLOW_ACTOR_ID = "maxcopell/zillow-scraper"
 # Result thresholds
 MAX_RESULTS = 500
 
+# Search constraints
+MAX_RADIUS_MILES = 0.5  # Maximum allowed search radius in miles
+
 # Logging configuration
 def setup_logging():
     """Configure comprehensive logging for the application"""

@@ -16,7 +16,7 @@ from concurrent.futures import ThreadPoolExecutor
 import os
 
 from src.run_agent import search_properties
-from src.config import logger
+from src.config import logger, MAX_RADIUS_MILES
 
 # Security configuration
 API_KEY = os.getenv("API_KEY", "")  # Set this in production
@@ -92,7 +92,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Allow all origins for webhook/API usage
     allow_credentials=False,  # Disable credentials for public API
-    allow_methods=["GET", "POST", "OPTIONS"],  # Specific methods for API
+    allow_methods=["GET", "POST", "HEAD", "OPTIONS"],  # Specific methods for API
     allow_headers=["Content-Type", "Authorization", "X-Requested-With"],
 )
 
@@ -155,8 +155,8 @@ class SearchFilters(BaseModel):
 
     @validator('radius_miles')
     def validate_radius(cls, v):
-        if v <= 0 or v > 100:
-            raise ValueError('radius_miles must be between 0 and 100')
+        if v <= 0 or v > MAX_RADIUS_MILES:
+            raise ValueError('radius_miles must be between 0 and MAX_RADIUS_MILES')
         return v
 
     @validator('latitude')
@@ -181,6 +181,7 @@ class SearchResponse(BaseModel):
 
 
 @app.get("/")
+@app.head("/")
 async def root():
     """Health check endpoint"""
     logger.debug("🏠 Root endpoint called - health check")

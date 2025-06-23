@@ -20,12 +20,6 @@ def normalize_results(raw_items: List[Dict[str, Any]]) -> List[Listing]:
     listings = []
     seen_properties: Set[str] = set()
     
-    print(f"Processing {len(raw_items)} raw items from APIFY...")
-    
-    # Show first item for debugging
-    if raw_items:
-        print(f"🔍 First raw item: {raw_items[0]}")
-    
     for i, item in enumerate(raw_items):
         # Skip empty or invalid items
         if not item or not isinstance(item, dict):
@@ -98,20 +92,10 @@ def normalize_results(raw_items: List[Dict[str, Any]]) -> List[Listing]:
             listings.append(listing)
             seen_properties.add(dedup_key)
             
-            # Show first normalized item for debugging
-            if len(listings) == 1:
-                print(f"✅ First normalized item: {normalized_data['address']} - ${price_for_dedup}")
-            
         except ValidationError as e:
-            if i == 0:  # Only show error for first item
-                print(f"❌ Validation error for first item: {e}")
             continue
         except Exception as e:
-            if i == 0:  # Only show error for first item
-                print(f"❌ Error processing first item: {e}")
             continue
-    
-    print(f"📊 Final result: Normalized {len(listings)} valid listings from {len(raw_items)} raw items")
     
     if len(listings) == 0:
         print("⚠️  No valid listings found. This could mean:")

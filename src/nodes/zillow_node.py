@@ -2,6 +2,10 @@
 
 import json
 import urllib.parse
+import sys
+import os
+from contextlib import redirect_stdout, redirect_stderr
+from io import StringIO
 from typing import List, Dict, Any
 from apify_client import ApifyClient
 from ..config import APIFY_TOKEN, ZILLOW_ACTOR_ID, MAX_RESULTS
@@ -135,20 +139,19 @@ def run_search(query: SearchQuery) -> List[Dict[str, Any]]:
         "maxItems": MAX_RESULTS
     }
     
-    print(f"🤖 Running Zillow scraper...")
-    
     # Run the actor
     try:
-        run = client.actor(ZILLOW_ACTOR_ID).call(run_input=actor_input)
-        
-        # Fetch results
-        results = []
-        dataset_id = run["defaultDatasetId"]
-        
-        for item in client.dataset(dataset_id).iterate_items():
-            results.append(item)
-        
-        print(f"📥 Retrieved {len(results)} raw items from APIFY")
+        # Redirect stdout and stderr to suppress APIFY output
+        with redirect_stdout(StringIO()), redirect_stderr(StringIO()):
+            # Run actor silently
+            run = client.actor(ZILLOW_ACTOR_ID).call(run_input=actor_input)
+            
+            # Fetch results silently
+            results = []
+            dataset_id = run["defaultDatasetId"]
+            
+            for item in client.dataset(dataset_id).iterate_items():
+                results.append(item)
         
         return results
         
