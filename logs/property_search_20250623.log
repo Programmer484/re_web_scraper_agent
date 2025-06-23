@@ -244,3 +244,6 @@
 2025-06-23 15:26:19,698 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.started
 2025-06-23 15:26:19,699 - httpcore.http11 - DEBUG - [_trace.py:47] - response_closed.complete
 2025-06-23 15:26:19,702 - apify_client - DEBUG - [_http_client.py:191] - Request successful
+2025-06-23 15:49:26,676 - PropertySearchAgent - DEBUG - [config.py:55] - Logging configuration initialized
+2025-06-23 15:49:26,676 - PropertySearchAgent - DEBUG - [config.py:56] - Log level set to: DEBUG
+2025-06-23 15:49:26,676 - PropertySearchAgent - DEBUG - [config.py:57] - APIFY_TOKEN configured: Yes

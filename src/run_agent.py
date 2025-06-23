@@ -145,18 +145,6 @@ def output_results(listings: List[Listing]):
         print("="*50)
         print("🚫 The search returned 0 properties.")
         print("")
-        print("💡 Possible reasons:")
-        print("   • Search criteria too restrictive")
-        print("   • No properties available in the area")
-        print("   • APIFY/Zillow scraper issue")
-        print("   • Invalid coordinates or search parameters")
-        print("")
-        print("🔧 Try adjusting your search:")
-        print("   • Increase radius_miles")
-        print("   • Remove price filters")
-        print("   • Remove bed/bath requirements")
-        print("   • Use listing_type='both' instead of specific type")
-        print("="*50)
         return
     
     # Convert Pydantic models to dict for JSON serialization
@@ -180,7 +168,7 @@ def output_results(listings: List[Listing]):
         elif listing.listing_type == "rental":
             rental_count += 1
     
-    # Pretty print JSON to stdout
+    # Show summary and first listing only for debug
     print("\n" + "="*50)
     print("NORMALIZED PROPERTY LISTINGS:")
     print("="*50)
@@ -188,26 +176,20 @@ def output_results(listings: List[Listing]):
     print(f"🏠 For Sale: {sale_count} listings")
     print(f"🏢 For Rent: {rental_count} listings")
     print("="*50)
-    print(json.dumps(listings_data, indent=2, default=str))
+    
+    # Only show first listing for debug purposes
+    if listings_data:
+        print("🔍 First normalized result:")
+        print(json.dumps([listings_data[0]], indent=2, default=str))
+        if len(listings_data) > 1:
+            print(f"... and {len(listings_data) - 1} more properties (saved to results.json)")
+    else:
+        print("No listings to display")
     
     # Only save to file if we have actual results
     with open("results.json", "w") as f:
         json.dump(listings_data, f, indent=2, default=str)
     print(f"\n✅ Results saved to results.json")
-    
-    # Show example of the new structure
-    if listings:
-        print("\n" + "="*50)
-        print("EXAMPLE LISTING STRUCTURE:")
-        print("="*50)
-        example = listings[0]
-        print(f"Listing Type: {example.listing_type}")
-        if example.sale_price:
-            print(f"Sale Price: ${example.sale_price:,}")
-        if example.rental_price:
-            print(f"Monthly Rent: ${example.rental_price:,}")
-        print(f"Address: {example.address}")
-        print(f"Beds/Baths: {example.beds}bd/{example.baths}ba")
 
 
 if __name__ == "__main__":

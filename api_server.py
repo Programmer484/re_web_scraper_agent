@@ -15,7 +15,7 @@ import asyncio
 from concurrent.futures import ThreadPoolExecutor
 import os
 
-from run_agent import search_properties
+from src.run_agent import search_properties
 from src.config import logger
 
 # Security configuration

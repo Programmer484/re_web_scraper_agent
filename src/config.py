@@ -46,6 +46,12 @@ def setup_logging():
     uvicorn_logger = logging.getLogger("uvicorn.access")
     uvicorn_logger.setLevel(logging.DEBUG)
     
+    # Suppress verbose logging from APIFY and HTTP libraries
+    logging.getLogger('apify_client').setLevel(logging.WARNING)
+    logging.getLogger('httpcore').setLevel(logging.WARNING)
+    logging.getLogger('httpx').setLevel(logging.WARNING)
+    logging.getLogger('urllib3').setLevel(logging.WARNING)
+    
     logger.debug("Logging configuration initialized")
     logger.debug(f"Log level set to: {log_level}")
     logger.debug(f"APIFY_TOKEN configured: {'Yes' if APIFY_TOKEN else 'No'}")
