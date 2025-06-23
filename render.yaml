@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: property-search-api
+    runtime: python3
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn api_server:app --host 0.0.0.0 --port $PORT
+    plan: starter
+    region: oregon
+    branch: master
+    healthCheckPath: /health
+    envVars:
+      - key: APIFY_TOKEN
+        sync: false  # This will need to be set manually in Render dashboard
+      - key: PYTHON_VERSION
+        value: "3.11"
+      - key: PORT
+        value: "8000"
+    scaling:
+      minInstances: 1
+      maxInstances: 3
+    disk:
+      name: property-search-disk
+      mountPath: /opt/render/project/src/logs
+      sizeGB: 1 
