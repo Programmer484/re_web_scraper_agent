@@ -26,33 +26,26 @@ MAX_REQUEST_SIZE = 1024 * 1024  # 1MB limit
 app = FastAPI(title="PropertySearch API", version="1.0.0")
 security = HTTPBearer(auto_error=False)
 
-# Security middleware
+# Single middleware for both security and logging - prevents request body consumption issues
 @app.middleware("http")
-async def security_middleware(request: Request, call_next):
-    """Enhanced security middleware"""
+async def unified_middleware(request: Request, call_next):
+    """Unified security and logging middleware to prevent wake-up issues"""
     start_time = time.time()
     client_ip = request.client.host if request.client else "unknown"
     
-    # Log webhook input (only for search endpoint)
-    if request.url.path == "/search":
-        logger.debug(f"🌐 WEBHOOK INPUT: {request.method} {request.url}")
-        if request.method == "POST":
-            try:
-                body = await request.body()
-                if body:
-                    logger.debug(f"📦 Request data: {body.decode('utf-8')}")
-            except Exception as e:
-                logger.debug(f"⚠️ Could not read request body: {e}")
+    # Log only essential info during wake-up to prevent slowdown
+    if request.url.path in ["/search"]:
+        logger.debug(f"🌐 {request.method} {request.url}")
     
     # IP whitelist check (if configured)
     if ALLOWED_IPS and client_ip not in ALLOWED_IPS:
-        logger.warning(f"🚫 Blocked request from unauthorized IP: {client_ip}")
+        logger.warning(f"🚫 Blocked IP: {client_ip}")
         raise HTTPException(status_code=403, detail="IP not allowed")
     
     # Request size limit
     content_length = request.headers.get("content-length")
     if content_length and int(content_length) > MAX_REQUEST_SIZE:
-        logger.warning(f"🚫 Request too large: {content_length} bytes from {client_ip}")
+        logger.warning(f"🚫 Request too large: {content_length} bytes")
         raise HTTPException(status_code=413, detail="Request too large")
     
     # Process request
@@ -60,15 +53,14 @@ async def security_middleware(request: Request, call_next):
     
     # Add security headers
     response.headers["X-Content-Type-Options"] = "nosniff"
-    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["X-Frame-Options"] = "DENY" 
     response.headers["X-XSS-Protection"] = "1; mode=block"
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
     
-    # Log completion only for search endpoint
+    # Log completion only for important endpoints
     if request.url.path == "/search":
         process_time = time.time() - start_time
-        logger.debug(f"✅ WEBHOOK COMPLETED: {process_time:.4f}s")
-        logger.debug(f"📤 Response status: {response.status_code}")
+        logger.debug(f"✅ Completed in {process_time:.4f}s - Status: {response.status_code}")
     
     return response
 
@@ -96,39 +88,10 @@ app.add_middleware(
     allow_headers=["Content-Type", "Authorization", "X-Requested-With"],
 )
 
-# Thread pool for running sync operations
-executor = ThreadPoolExecutor(max_workers=4)
+# Smaller thread pool for better resource management during wake-up
+executor = ThreadPoolExecutor(max_workers=2)
 
-# Middleware for request logging
-@app.middleware("http")
-async def log_requests(request: Request, call_next):
-    """Log all incoming requests with DEBUG level detail"""
-    start_time = time.time()
-    
-    # Log request details
-    logger.debug(f"🌐 INCOMING REQUEST: {request.method} {request.url}")
-    logger.debug(f"📋 Request headers: {dict(request.headers)}")
-    logger.debug(f"📍 Client IP: {request.client.host if request.client else 'Unknown'}")
-    
-    # If request has body, try to log it
-    if request.method in ["POST", "PUT", "PATCH"]:
-        try:
-            body = await request.body()
-            if body:
-                logger.debug(f"📦 Request body: {body.decode('utf-8')}")
-        except Exception as e:
-            logger.debug(f"⚠️ Could not read request body: {e}")
-    
-    # Process request
-    response = await call_next(request)
-    
-    # Log response details
-    process_time = time.time() - start_time
-    logger.debug(f"✅ REQUEST COMPLETED: {request.method} {request.url}")
-    logger.debug(f"⏱️ Processing time: {process_time:.4f}s")
-    logger.debug(f"📤 Response status: {response.status_code}")
-    
-    return response
+
 
 
 class SearchFilters(BaseModel):

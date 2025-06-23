@@ -3,7 +3,7 @@ services:
     name: property-search-api
     runtime: python3
     buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn api_server:app --host 0.0.0.0 --port $PORT --log-level debug --access-log
+    startCommand: uvicorn api_server:app --host 0.0.0.0 --port $PORT --log-level info --access-log --timeout-keep-alive 65
     plan: starter
     region: oregon
     branch: main
@@ -19,8 +19,10 @@ services:
         value: "1"
       - key: PYTHONDONTWRITEBYTECODE
         value: "1"
+      - key: LOG_LEVEL
+        value: "INFO"  # Use INFO level for production to reduce wake-up overhead
     scaling:
-      minInstances: 1
+      minInstances: 0  # Allow scaling to 0 for free tier
       maxInstances: 3
     disk:
       name: property-search-disk
