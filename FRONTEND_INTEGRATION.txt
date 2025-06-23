@@ -1,0 +1,185 @@
+PropertySearch Agent Integration Guide
+===========================================
+
+Service: http://localhost:8000
+Status: Running in Docker container
+
+API ENDPOINTS
+=============
+
+POST /search
+Request: SearchFilters object
+Response: SearchResponse object
+
+GET /health
+Response: {"status": "healthy", "service": "PropertySearch API"}
+
+GET /search/examples
+Response: Example filter configurations
+
+TYPESCRIPT TYPES
+================
+
+// types/property.ts
+export interface SearchFilters {
+  listing_type?: "sale" | "rental" | "both";
+  latitude?: number;
+  longitude?: number;
+  radius_miles?: number;
+  min_sale_price?: number;
+  max_sale_price?: number;
+  min_rent_price?: number;
+  max_rent_price?: number;
+  min_beds?: number;
+  max_beds?: number;
+  min_baths?: number;
+  max_baths?: number;
+  home_types?: string[];
+}
+
+export interface PropertyListing {
+  zpid?: string;
+  listing_type?: "sale" | "rental";
+  home_type?: string;
+  home_status?: string;
+  sale_price?: number;
+  rental_price?: number;
+  zestimate?: number;
+  rent_zestimate?: number;
+  address?: string;
+  beds?: number;
+  baths?: number;
+  living_area?: number;
+  lot_size?: string;
+  year_built?: number;
+  latitude?: number;
+  longitude?: number;
+  source_url?: string;
+  broker_name?: string;
+  days_on_zillow?: number;
+  timestamp: string;
+}
+
+export interface SearchResponse {
+  success: boolean;
+  count: number;
+  listings: PropertyListing[];
+  message?: string;
+}
+
+API CLIENT
+==========
+
+// services/propertyApi.ts
+const API_BASE_URL = 'http://localhost:8000';
+
+export const propertyApi = {
+  async searchProperties(filters: SearchFilters): Promise<SearchResponse> {
+    const response = await fetch(`${API_BASE_URL}/search`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(filters),
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Search failed: ${response.statusText}`);
+    }
+    
+    return response.json();
+  },
+
+  async healthCheck(): Promise<{status: string; service: string}> {
+    const response = await fetch(`${API_BASE_URL}/health`);
+    return response.json();
+  }
+};
+
+REACT HOOK
+==========
+
+// hooks/usePropertySearch.ts
+import { useState, useCallback } from 'react';
+import { propertyApi } from '../services/propertyApi';
+
+export const usePropertySearch = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [results, setResults] = useState<SearchResponse | null>(null);
+
+  const searchProperties = useCallback(async (filters: SearchFilters) => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const response = await propertyApi.searchProperties(filters);
+      setResults(response);
+      return response;
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Search failed';
+      setError(errorMessage);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const clearResults = useCallback(() => {
+    setResults(null);
+    setError(null);
+  }, []);
+
+  return {
+    searchProperties,
+    clearResults,
+    loading,
+    error,
+    results,
+    listings: results?.listings || [],
+    count: results?.count || 0
+  };
+};
+
+UTILITY FUNCTIONS
+================
+
+// utils/propertyUtils.ts
+export const formatPrice = (price?: number): string => {
+  if (!price) return 'N/A';
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 0,
+  }).format(price);
+};
+
+export const formatPropertyDetails = (listing: PropertyListing): string => {
+  const parts = [];
+  if (listing.beds) parts.push(`${listing.beds} bed${listing.beds > 1 ? 's' : ''}`);
+  if (listing.baths) parts.push(`${listing.baths} bath${listing.baths > 1 ? 's' : ''}`);
+  if (listing.living_area) parts.push(`${listing.living_area.toLocaleString()} sqft`);
+  return parts.join(' • ');
+};
+
+EXAMPLE USAGE
+=============
+
+const { searchProperties, loading, error, listings } = usePropertySearch();
+
+const handleSearch = async () => {
+  await searchProperties({
+    listing_type: "rental",
+    latitude: 30.2672,
+    longitude: -97.7431,
+    radius_miles: 15.0,
+    min_rent_price: 1000,
+    max_rent_price: 4000,
+    min_beds: 1
+  });
+};
+
+CORS ENABLED FOR
+================
+- http://localhost:3000
+- http://localhost:5173 
