@@ -18,13 +18,13 @@ from src.config import logger
 
 app = FastAPI(title="PropertySearch API", version="1.0.0")
 
-# Enable CORS for React frontend
+# Enable CORS for broader API access
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:5173"],  # React dev servers
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=["*"],  # Allow all origins for webhook/API usage
+    allow_credentials=False,  # Disable credentials for public API
+    allow_methods=["GET", "POST", "OPTIONS"],  # Specific methods for API
+    allow_headers=["Content-Type", "Authorization", "X-Requested-With"],
 )
 
 # Thread pool for running sync operations
