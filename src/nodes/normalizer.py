@@ -221,8 +221,8 @@ def _extract_price(price_data: Any) -> Optional[int]:
             else:
                 price_str = re.sub(r'[^\d.]', '', price_data)
         else:
-        # Remove common price formatting ($ , commas, etc.)
-        price_str = re.sub(r'[^\d.]', '', price_data)
+            # Remove common price formatting ($ , commas, etc.)
+            price_str = re.sub(r'[^\d.]', '', price_data)
         
         try:
             return int(float(price_str))
