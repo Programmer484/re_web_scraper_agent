@@ -3,7 +3,7 @@
 from datetime import datetime
 from typing import List, Optional, Literal
 from dataclasses import dataclass
-from pydantic import BaseModel, Field, HttpUrl
+from pydantic import BaseModel, Field, HttpUrl, field_validator
 
 
 class Listing(BaseModel):
@@ -48,15 +48,15 @@ class Listing(BaseModel):
         return self.sale_price if self.sale_price is not None else self.rental_price
 
 
-class SearchQuery(BaseModel):
-    """Search query parameters for property search - Zillow-like filters"""
+class SearchFilters(BaseModel):
+    """Consolidated search filters model for both API and internal use"""
     # Listing type filter
-    listing_type: Optional[Literal["sale", "rental", "both"]] = Field(default="both", description="Type of listings to search")
+    listing_type: Literal["sale", "rental", "both"] = Field(default=None, description="Type of listings to search")
     
     # Location (using coordinates for now as requested)
     latitude: Optional[float] = Field(None, description="Center latitude for search")
     longitude: Optional[float] = Field(None, description="Center longitude for search")
-    radius_miles: Optional[float] = Field(default=5.0, description="Search radius in miles")
+    radius_miles: float = Field(None, description="Search radius in miles")
     
     # Price filters
     min_sale_price: Optional[int] = Field(None, description="Minimum sale price")
@@ -72,3 +72,36 @@ class SearchQuery(BaseModel):
     
     # Additional filters
     home_types: Optional[List[str]] = Field(default=None, description="Property types to include (CONDO, SINGLE_FAMILY, etc.)")
+
+    @field_validator('listing_type')
+    def validate_listing_type(cls, v):
+        if v not in ['sale', 'rental', 'both']:
+            raise ValueError('listing_type must be "sale", "rental", or "both"')
+        return v
+
+    @field_validator('radius_miles')
+    def validate_radius(cls, v):
+        from src.config import MAX_RADIUS_MILES
+        if v <= 0 or v > MAX_RADIUS_MILES:
+            raise ValueError('radius_miles must be between 0 and MAX_RADIUS_MILES')
+        return v
+
+    @field_validator('latitude')
+    def validate_latitude(cls, v):
+        if v is not None and (v < -90 or v > 90):
+            raise ValueError('latitude must be between -90 and 90')
+        return v
+
+    @field_validator('longitude')
+    def validate_longitude(cls, v):
+        if v is not None and (v < -180 or v > 180):
+            raise ValueError('longitude must be between -180 and 180')
+        return v
+
+
+class SearchResponse(BaseModel):
+    """API response model"""
+    success: bool
+    count: int
+    listings: List[dict]
+    message: Optional[str] = None

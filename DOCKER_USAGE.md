@@ -90,11 +90,6 @@ Content-Type: application/json
 }
 ```
 
-### Example Configurations
-```bash
-GET http://localhost:8000/search/examples
-```
-
 ## Troubleshooting
 
 ### Container Won't Start

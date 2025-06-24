@@ -1,6 +1,5 @@
 pydantic>=2.7
 python-dotenv>=1.0
 apify-client>=1.7
-grafi>=0.0.8
 fastapi>=0.104.1
 uvicorn[standard]>=0.24.0 

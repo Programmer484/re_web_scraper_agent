@@ -7,15 +7,15 @@ from io import StringIO
 from typing import List, Dict, Any
 from apify_client import ApifyClient
 from ..config import APIFY_TOKEN, ZILLOW_ACTOR_ID, MAX_RESULTS
-from ..models import SearchQuery
+from ..models import SearchFilters
 
 
-def build_zillow_url(query: SearchQuery) -> str:
+def build_zillow_url(query: SearchFilters) -> str:
     """
-    Build Zillow search URL from SearchQuery parameters
+    Build Zillow search URL from SearchFilters parameters
     
     Args:
-        query: SearchQuery containing search criteria
+        query: SearchFilters containing search criteria
         
     Returns:
         Zillow search URL with encoded filters
@@ -104,12 +104,12 @@ def build_zillow_url(query: SearchQuery) -> str:
     return f"{base_url}?searchQueryState={encoded_state}"
 
 
-def run_search(query: SearchQuery) -> List[Dict[str, Any]]:
+def run_search(query: SearchFilters) -> List[Dict[str, Any]]:
     """
     Run property search using Zillow scraper via Apify
     
     Args:
-        query: SearchQuery containing search criteria
+        query: SearchFilters containing search criteria
         
     Returns:
         List of raw property data dictionaries from Zillow
@@ -147,4 +147,4 @@ def run_search(query: SearchQuery) -> List[Dict[str, Any]]:
                 results.append(item)
         return results
     except Exception as e:
-        raise 
+        raise Exception(f"Error running Zillow search: {e}")
