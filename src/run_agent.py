@@ -30,26 +30,12 @@ def main(filters: SearchFilters):
         """
         This is the test data for the normalizer.
         """
-        # Load test data from results_rentcast.json
-        with open('data/results_rentcast.json', 'r') as f:
-            rentcast_data = json.load(f)
+        with open('data/sample_data.json', 'r') as f:
+            sample_data = json.load(f)
         
-        # Convert rentcast data directly to Listing objects
         listings = []
-        for i, item in enumerate(rentcast_data):
-            listing_data = {
-                'zpid': str(i),
-                'building': False,
-                'listing_type': item.get('listing_type'),
-                'sale_price': item.get('sale_price'),
-                'rental_price': item.get('rental_price'),
-                'zestimate': item.get('estimated_value'),
-                'rent_zestimate': item.get('estimated_rent'),
-                'address': item.get('address'),
-                'beds': item.get('beds'),
-                'baths': item.get('baths'),
-            }
-            listing = Listing(**listing_data)
+        for i, item in enumerate(sample_data):
+            listing = Listing(**item)
             listings.append(listing)
         
         print(f"Found {len(listings)} listings")
