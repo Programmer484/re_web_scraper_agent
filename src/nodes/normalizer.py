@@ -180,7 +180,6 @@ def _process_individual_property(item: Dict[str, Any]) -> Optional[Dict[str, Any
         # Listing metadata
         "source_url": _extract_url(item.get("detailUrl")),
         "broker_name": item.get("brokerName"),
-        "days_on_zillow": _extract_number(item.get("timeOnZillow")),
     }
 
 
