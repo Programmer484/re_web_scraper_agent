@@ -11,6 +11,7 @@ load_dotenv()
 
 # Apify configuration
 APIFY_TOKEN = os.getenv("APIFY_TOKEN")
+LOG_LEVEL = os.getenv("LOG_LEVEL")
 ZILLOW_ACTOR_ID = "maxcopell/zillow-scraper"
 
 # Result thresholds
@@ -24,14 +25,13 @@ def setup_logging():
     """Configure comprehensive logging for the application"""
     
     # Set log level directly in config for consistent DEBUG logging
-    log_level = "DEBUG"
-    
+
     # Create logs directory if it doesn't exist
     os.makedirs("logs", exist_ok=True)
     
     # Configure root logger
     logging.basicConfig(
-        level=getattr(logging, log_level),
+        level=getattr(logging, LOG_LEVEL),
         format='%(asctime)s - %(name)s - %(levelname)s - [%(filename)s:%(lineno)d] - %(message)s',
         handlers=[
             # Console handler for immediate feedback
@@ -43,7 +43,7 @@ def setup_logging():
     
     # Create logger for the application
     logger = logging.getLogger("PropertySearchAgent")
-    logger.setLevel(getattr(logging, log_level))
+    logger.setLevel(getattr(logging, LOG_LEVEL))
     
     # Also configure uvicorn logger for API requests
     uvicorn_logger = logging.getLogger("uvicorn.access")
@@ -56,7 +56,7 @@ def setup_logging():
     logging.getLogger('urllib3').setLevel(logging.WARNING)
     
     logger.debug("Logging configuration initialized")
-    logger.debug(f"Log level set to: {log_level}")
+    logger.debug(f"Log level set to: {LOG_LEVEL}")
     logger.debug(f"APIFY_TOKEN configured: {'Yes' if APIFY_TOKEN else 'No'}")
     
     return logger

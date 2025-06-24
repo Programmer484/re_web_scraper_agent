@@ -9,7 +9,7 @@ import logging
 from fastapi import FastAPI, HTTPException, Request, Depends, Header
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, field_validator
 from typing import List, Optional
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
@@ -110,25 +110,25 @@ class SearchFilters(BaseModel):
     max_baths: Optional[float] = None
     home_types: Optional[List[str]] = None
 
-    @validator('listing_type')
+    @field_validator('listing_type')
     def validate_listing_type(cls, v):
         if v not in ['sale', 'rental', 'both']:
             raise ValueError('listing_type must be "sale", "rental", or "both"')
         return v
 
-    @validator('radius_miles')
+    @field_validator('radius_miles')
     def validate_radius(cls, v):
         if v <= 0 or v > MAX_RADIUS_MILES:
             raise ValueError('radius_miles must be between 0 and MAX_RADIUS_MILES')
         return v
 
-    @validator('latitude')
+    @field_validator('latitude')
     def validate_latitude(cls, v):
         if v is not None and (v < -90 or v > 90):
             raise ValueError('latitude must be between -90 and 90')
         return v
 
-    @validator('longitude')
+    @field_validator('longitude')
     def validate_longitude(cls, v):
         if v is not None and (v < -180 or v > 180):
             raise ValueError('longitude must be between -180 and 180')
@@ -144,11 +144,9 @@ class SearchResponse(BaseModel):
 
 
 @app.get("/")
-@app.head("/")
 async def root():
-    """Health check endpoint"""
-    logger.debug("🏠 Root endpoint called - health check")
-    return {"message": "PropertySearch API is running"}
+    """Root endpoint - simple API info"""
+    return {"message": "PropertySearch API", "version": "1.0.0", "docs": "/docs"}
 
 
 @app.get("/health")
@@ -170,10 +168,10 @@ async def search_properties_endpoint(
     """
     request_start = time.time()
     
-    logger.debug("🔍 PROPERTY SEARCH REQUEST INITIATED")
+    logger.info("🔍 PROPERTY SEARCH REQUEST INITIATED")
     
     try:
-        logger.debug("⚙️ Executing property search...")
+        logger.info("⚙️ Executing property search...")
         
         # Run the search in a thread pool to avoid blocking
         loop = asyncio.get_event_loop()
@@ -195,7 +193,7 @@ async def search_properties_endpoint(
             filters.home_types
         )
         
-        logger.debug(f"🎉 Property search completed! Found {len(listings)} listings")
+        logger.info(f"🎉 Property search completed! Found {len(listings)} listings")
         
         # Convert Pydantic models to dicts for JSON response
         listings_data = []
