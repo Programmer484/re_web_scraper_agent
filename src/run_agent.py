@@ -87,8 +87,15 @@ def output_results(listings: List[Listing]):
             sale_count += 1
         elif listing.listing_type == "rental":
             rental_count += 1
-    with open("results.json", "w") as f:
-        json.dump(listings_data, f, indent=2, default=str)
+    
+    # Try to write to file, but don't fail if we can't
+    try:
+        with open("results.json", "w") as f:
+            json.dump(listings_data, f, indent=2, default=str)
+    except (PermissionError, OSError) as e:
+        # If we can't write to file, just log the results
+        print(f"Could not write to results.json: {e}")
+        print(f"Found {len(listings_data)} listings ({sale_count} sale, {rental_count} rental)")
 
 
 if __name__ == "__main__":
