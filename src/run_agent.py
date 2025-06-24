@@ -44,10 +44,10 @@ def main(filters: dict = None, filters_file: str = None):
 
 
 def search_properties(
-    latitude: float,           # required
-    longitude: float,          # required
-    listing_type: str = "both",
-    radius_miles: float = 0.5,
+    listing_type: str = None,
+    latitude: float = None,
+    longitude: float = None,
+    radius_miles: float = None,
     min_sale_price: int = None,
     max_sale_price: int = None,
     min_rent_price: int = None,
@@ -59,24 +59,10 @@ def search_properties(
     home_types: List[str] = None
 ) -> List[Listing]:
     """
-    Search properties with filters (latitude and longitude required)
+    Search properties with filters (all parameters optional)
     """
-    filters = {
-        "listing_type": listing_type,
-        "latitude": latitude,
-        "longitude": longitude,
-        "radius_miles": radius_miles
-    }
-    optional_params = [
-        "min_sale_price", "max_sale_price",
-        "min_rent_price", "max_rent_price", "min_beds", "max_beds",
-        "min_baths", "max_baths", "home_types"
-    ]
-    for param in optional_params:
-        value = locals()[param]
-        if value is not None:
-            filters[param] = value
-
+    params = locals()
+    filters = {k: v for k, v in params.items() if v is not None}
     return main(filters=filters)
 
 
