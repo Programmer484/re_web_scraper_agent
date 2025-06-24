@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: property-search-api
+    runtime: python3
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn api_server:app --host 0.0.0.0 --port $PORT --log-level info --access-log --timeout-keep-alive 65
+    plan: starter
+    region: oregon
+    branch: main
+    healthCheckPath: /health
+    envVars:
+      - key: APIFY_TOKEN
+        sync: false  # This will need to be set manually in Render dashboard
+      - key: PYTHON_VERSION
+        value: "3.11"
+      - key: PORT
+        value: "8000"
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: PYTHONDONTWRITEBYTECODE
+        value: "1"
+      - key: LOG_LEVEL
+        value: "INFO"  # Use INFO level for production to reduce wake-up overhead
+    scaling:
+      minInstances: 0  # Allow scaling to 0 for free tier
+      maxInstances: 3
+    disk:
+      name: property-search-disk
+      mountPath: /opt/render/project/src/logs
+      sizeGB: 1 
