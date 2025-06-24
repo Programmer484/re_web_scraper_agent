@@ -30,10 +30,9 @@ def build_query(filters: dict = None, filters_file: str = None) -> SearchQuery:
                     filters_data = json.load(f)
                 return SearchQuery(**filters_data)
             except (json.JSONDecodeError, TypeError, ValueError) as e:
-                print(f"Error reading filters file {filters_file}: {e}")
-                print("Using default search parameters...")
+                pass
         else:
-            print(f"No filters file found at {filters_file}. Using default search parameters...")
+            pass
     
     # Default fallback - Austin, TX area
     return SearchQuery(

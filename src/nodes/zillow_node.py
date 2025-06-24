@@ -2,8 +2,6 @@
 
 import json
 import urllib.parse
-import sys
-import os
 from contextlib import redirect_stdout, redirect_stderr
 from io import StringIO
 from typing import List, Dict, Any
@@ -139,23 +137,14 @@ def run_search(query: SearchQuery) -> List[Dict[str, Any]]:
         "maxItems": MAX_RESULTS
     }
     
-    # Run the actor
+    # Run the actor silently
     try:
-        # Redirect stdout and stderr to suppress APIFY output
         with redirect_stdout(StringIO()), redirect_stderr(StringIO()):
-            # Run actor silently
             run = client.actor(ZILLOW_ACTOR_ID).call(run_input=actor_input)
-            
-            # Fetch results silently
             results = []
             dataset_id = run["defaultDatasetId"]
-            
             for item in client.dataset(dataset_id).iterate_items():
                 results.append(item)
-        
         return results
-        
     except Exception as e:
-        print(f"❌ Error calling APIFY Zillow scraper: {e}")
-        print(f"🔧 APIFY Token configured: {'Yes' if APIFY_TOKEN else 'No'}")
         raise 

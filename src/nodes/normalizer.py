@@ -98,12 +98,7 @@ def normalize_results(raw_items: List[Dict[str, Any]]) -> List[Listing]:
             continue
     
     if len(listings) == 0:
-        print("⚠️  No valid listings found. This could mean:")
-        print("   1. APIFY returned empty/invalid data")
-        print("   2. Search criteria too restrictive")
-        print("   3. Zillow URL not generating results")
-        print("   4. APIFY actor configuration issue")
-    
+        pass
     return listings
 
 

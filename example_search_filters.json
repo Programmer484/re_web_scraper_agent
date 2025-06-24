@@ -1,0 +1,16 @@
+{
+  "listing_type": "rental",
+  "latitude": 30.2672,
+  "longitude": -97.7431,
+  "radius_miles": 5.0,
+  "min_rent_price": 1000,
+  "max_rent_price": 3000,
+  "min_beds": 1,
+  "max_beds": 3,
+  "min_baths": 1.0,
+  "home_types": [
+    "CONDO",
+    "SINGLE_FAMILY",
+    "TOWNHOUSE"
+  ]
+}
