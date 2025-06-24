@@ -29,57 +29,30 @@ def normalize_results(raw_items: List[Dict[str, Any]]) -> List[Listing]:
         has_address = bool(item.get("address"))
         has_price = bool(item.get("price") or item.get("unformattedPrice"))
         has_zpid = bool(item.get("zpid"))
+        has_building_id = bool(item.get("buildingId"))  # Handle building listings
         has_coordinates = bool(item.get("latLong") or (item.get("latitude") and item.get("longitude")))
         
-        if not any([has_address, has_price, has_zpid, has_coordinates]):
+        if not any([has_address, has_price, has_zpid, has_building_id, has_coordinates]):
             continue
         
         try:
-            # Detect listing type and extract appropriate price
-            listing_type, sale_price, rental_price = _extract_listing_type_and_prices(item)
+            # Check if this is a building vs individual property
+            is_building = bool(item.get("isBuilding") or item.get("buildingId"))
             
-            # Skip if we can't determine a valid listing type or price
-            if not listing_type or (not sale_price and not rental_price):
+            if is_building:
+                # Process building with separate logic
+                normalized_data = _process_building(item)
+            else:
+                # Process individual property with existing logic
+                normalized_data = _process_individual_property(item)
+            
+            if not normalized_data:
                 continue
             
-            # Extract location data
-            lat, lon = _extract_coordinates(item)
-            
-            # Extract other fields from raw Zillow data
-            normalized_data = {
-                # Zillow identifiers
-                "zpid": str(item.get("zpid")) if item.get("zpid") else None,
-                
-                # Listing classification
-                "listing_type": listing_type,
-                "home_type": item.get("homeType"),
-                "home_status": item.get("homeStatus", item.get("statusType")),
-                
-                # Pricing information
-                "sale_price": sale_price,
-                "rental_price": rental_price,
-                "zestimate": _extract_number(item.get("zestimate")),
-                "rent_zestimate": _extract_number(item.get("rentZestimate")),
-                
-                # Property details
-                "address": _extract_address(item.get("address")),
-                "beds": _extract_number(item.get("beds", item.get("bedrooms"))),
-                "baths": _extract_number(item.get("baths", item.get("bathrooms")), float_allowed=True),
-                "living_area": _extract_number(item.get("area", item.get("livingArea"))),
-                "lot_size": item.get("lotSize"),
-                "year_built": _extract_number(item.get("yearBuilt")),
-                
-                # Location data
-                "latitude": lat,
-                "longitude": lon,
-                
-                # Listing metadata
-                "source_url": _extract_url(item.get("detailUrl", item.get("url"))),
-                "broker_name": item.get("brokerName"),
-                "days_on_zillow": _extract_number(item.get("daysOnZillow")),
-            }
-            
-            # Create deduplication key using the appropriate price
+            # Create deduplication key
+            listing_type = normalized_data.get("listing_type")
+            sale_price = normalized_data.get("sale_price")
+            rental_price = normalized_data.get("rental_price")
             price_for_dedup = sale_price if sale_price is not None else rental_price
             dedup_key = f"{normalized_data['address']}_{price_for_dedup}_{listing_type}"
             
@@ -102,33 +75,113 @@ def normalize_results(raw_items: List[Dict[str, Any]]) -> List[Listing]:
     return listings
 
 
-def _extract_listing_type_and_prices(item: Dict[str, Any]) -> Tuple[Optional[str], Optional[int], Optional[int]]:
+def _process_building(item: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     """
-    Determine listing type and extract appropriate prices for Zillow data
+    Process building listings with simplified logic
     
+    Args:
+        item: Raw building data from Zillow
+        
     Returns:
-        Tuple of (listing_type, sale_price, rental_price)
+        Normalized building data dict or None if invalid
     """
-    # Extract price data from Zillow fields
-    price = _extract_price(item.get("price", item.get("unformattedPrice")))
+    # Extract basic building information
+    address = _extract_address(item.get("address"))
+    price = _extract_price(item.get("price"))
+    lat, lon = _extract_coordinates(item)
     
-    # Determine listing type based on Zillow data structure
-    url = item.get("detailUrl", item.get("url", ""))
-    home_status = item.get("homeStatus", item.get("statusType", "")).upper()
+    # Skip if no basic data
+    if not address or not price:
+        return None
     
-    # Check if this is a rental listing
-    is_rental_listing = (
-        "/rental/" in url or 
-        "/rent/" in url or
-        "RENT" in home_status or
-        item.get("isRental") or
-        item.get("rentalCategory") is not None
-    )
+
+    status_text = item.get("statusType", "").upper()
+    is_rental = "RENT" in status_text
     
-    if is_rental_listing:
-        return "rental", None, price
-    else:
-        return "sale", price, None
+    return {
+        # Identifiers
+        "zpid": str(item.get("buildingId", "")),
+        
+        # Building flag
+        "building": True,
+        
+        # Classification
+        "listing_type": "rental" if is_rental else "sale",
+        "home_status": item.get("statusType"),
+        
+        # Basic info
+        "address": address,
+        "sale_price": None if is_rental else price,
+        "rental_price": price if is_rental else None,
+        
+        # Location
+        "latitude": lat,
+        "longitude": lon,
+        
+        # Building-specific (use min values as representative)
+        "beds": _extract_number(item.get("minBeds")),
+        "baths": _extract_number(item.get("minBaths"), float_allowed=True),
+        "living_area": _extract_number(item.get("minArea")),
+        
+        # Metadata
+        "source_url": _extract_url(item.get("detailUrl")),
+    }
+
+
+def _process_individual_property(item: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    """
+    Process individual property listings with full logic
+    
+    Args:
+        item: Raw property data from Zillow
+        
+    Returns:
+        Normalized property data dict or None if invalid
+    """
+    lat, lon = _extract_coordinates(item)
+    address = _extract_address(item)
+    price = _extract_price(item.get("price"))
+    status_text = item.get("statusText", "")
+    is_rental = "RENT" in status_text
+    
+    # Get hdpData as backup only
+    hdp_data = item.get("hdpData", {}).get("homeInfo", {})
+    
+    return {
+        # Zillow identifiers
+        "zpid": str(item.get("zpid")),
+        
+        # Property flag
+        "building": False,
+        
+        # Listing classification
+        "listing_type": "rental" if is_rental else "sale",
+        "home_type": item.get("homeType"),
+        "home_status": item.get("statusType"),
+        
+        # Pricing information
+        "sale_price": None if is_rental else price,
+        "rental_price": price if is_rental else None,
+        "zestimate": _extract_number(hdp_data.get("zestimate")),
+        "rent_zestimate": _extract_number(hdp_data.get("rentZestimate")),
+        
+        # Property details
+        "address": address,
+        "beds": _extract_number(item.get("beds")),
+        "baths": _extract_number(item.get("baths"), float_allowed=True),
+        "living_area": _extract_number(item.get("area")),
+        "lot_size": str(hdp_data.get("lotAreaValue")) if hdp_data.get("lotAreaValue") is not None else None,
+        "year_built": _extract_number(hdp_data.get("yearBuilt")),
+        
+        # Location data
+        "latitude": lat,
+        "longitude": lon,
+        
+        # Listing metadata
+        "source_url": _extract_url(item.get("detailUrl")),
+        "broker_name": item.get("brokerName"),
+        "days_on_zillow": _extract_number(item.get("timeOnZillow")),
+    }
 
 
 def _extract_coordinates(item: Dict[str, Any]) -> Tuple[Optional[float], Optional[float]]:
@@ -159,8 +212,18 @@ def _extract_price(price_data: Any) -> Optional[int]:
         return int(price_data)
         
     if isinstance(price_data, str):
-        # Remove common price formatting ($ , commas, etc.)
-        price_str = re.sub(r'[^\d.]', '', price_data)
+        # Handle range prices like "From $388,000" - extract the number
+        if "from" in price_data.lower():
+            # Extract number after "from"
+            match = re.search(r'from\s*\$?([0-9,]+)', price_data.lower())
+            if match:
+                price_str = re.sub(r'[^\d]', '', match.group(1))
+            else:
+                price_str = re.sub(r'[^\d.]', '', price_data)
+        else:
+            # Remove common price formatting ($ , commas, etc.)
+            price_str = re.sub(r'[^\d.]', '', price_data)
+        
         try:
             return int(float(price_str))
         except ValueError:
@@ -188,7 +251,7 @@ def _extract_address(address_data: Any) -> Optional[str]:
     return str(address_data) if address_data else None
 
 
-def _extract_number(number_data: Any, float_allowed: bool = False) -> Optional[int]:
+def _extract_number(number_data: Any, float_allowed: bool = False) -> Optional[float]:
     """Extract and normalize numeric data (beds, baths, etc.)"""
     if number_data is None:
         return None

@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  property-agent:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile
+    container_name: property-scraper-api-dev
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+    env_file:
+      - ../.env
+    volumes:
+      # Mount source code for development with hot-reload
+      - ../src:/app/src
+      - ../api_server.py:/app/api_server.py
+      - ../requirements.txt:/app/requirements.txt
+      # Mount logs directory
+      - ../data/logs:/app/logs
+    restart: unless-stopped
+    networks:
+      - property-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+
+networks:
+  property-net:
+    driver: bridge 

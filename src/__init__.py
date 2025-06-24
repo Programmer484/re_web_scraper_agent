@@ -9,4 +9,4 @@ from .run_agent import main
 
 
 # Export the main interface and models
-__all__ = ["main", "Listing", "SearchFilters"] 
+__all__ = ["run_agent", "Listing", "SearchFilters"] 

@@ -106,15 +106,7 @@ async def search_properties_endpoint(
         listings = await loop.run_in_executor(executor, main, filters)
         
         # Convert models to dicts for JSON response
-        listings_data = []
-        for listing in listings:
-            listing_dict = listing.model_dump()
-            # Handle special field types
-            if listing_dict.get("timestamp"):
-                listing_dict["timestamp"] = listing_dict["timestamp"].isoformat()
-            if listing_dict.get("source_url"):
-                listing_dict["source_url"] = str(listing_dict["source_url"])
-            listings_data.append(listing_dict)
+        listings_data = [listing.model_dump() for listing in listings]
         
         return SearchResponse(
             success=True,

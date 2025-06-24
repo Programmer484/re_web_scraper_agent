@@ -40,6 +40,7 @@ class Listing(BaseModel):
     days_on_zillow: Optional[int] = Field(None, description="Days property has been on Zillow")
     
     # System fields
+    building: bool = Field(default=False, description="Whether this is a building listing (vs individual property)")
     timestamp: datetime = Field(default_factory=datetime.now, description="Timestamp when listing was processed")
 
     @property
