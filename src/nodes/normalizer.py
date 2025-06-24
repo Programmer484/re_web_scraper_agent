@@ -134,7 +134,7 @@ def _process_individual_property(item: Dict[str, Any]) -> Optional[Dict[str, Any
     
     Args:
         item: Raw property data from Zillow
-        
+    
     Returns:
         Normalized property data dict or None if invalid
     """
@@ -221,8 +221,8 @@ def _extract_price(price_data: Any) -> Optional[int]:
             else:
                 price_str = re.sub(r'[^\d.]', '', price_data)
         else:
-            # Remove common price formatting ($ , commas, etc.)
-            price_str = re.sub(r'[^\d.]', '', price_data)
+        # Remove common price formatting ($ , commas, etc.)
+        price_str = re.sub(r'[^\d.]', '', price_data)
         
         try:
             return int(float(price_str))

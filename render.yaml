@@ -20,7 +20,7 @@ services:
       - key: PYTHONDONTWRITEBYTECODE
         value: "1"
       - key: LOG_LEVEL
-        value: "INFO"  # Use INFO level for production to reduce wake-up overhead
+        value: "INFO" 
     scaling:
       minInstances: 0  # Allow scaling to 0 for free tier
       maxInstances: 3

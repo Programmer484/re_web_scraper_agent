@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   property-agent:
-    build:
+    build: 
       context: ..
       dockerfile: infra/Dockerfile
     container_name: property-scraper-api

@@ -11,7 +11,7 @@ load_dotenv()
 
 # Apify configuration
 APIFY_TOKEN = os.getenv("APIFY_TOKEN")
-LOG_LEVEL = os.getenv("LOG_LEVEL")
+LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")  # Default to INFO if not set
 ZILLOW_ACTOR_ID = "maxcopell/zillow-scraper"
 
 # Result thresholds
